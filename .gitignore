@@ -1,6 +1,6 @@
 **/screenshots
 *.txt
-*.docx
+# *.docx
 *.tmp
 
 docs/_build/
