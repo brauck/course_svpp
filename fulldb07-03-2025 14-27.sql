@@ -253,6 +253,7 @@ DROP TABLE IF EXISTS `room`;
 
 CREATE TABLE `room` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `room_category` enum('1','2','3','4'),
   `client_id` bigint(20) unsigned NOT NULL,
   `rooms_quantity` enum('Single','Double','Triple','Quadruple') DEFAULT NULL,
   PRIMARY KEY (`id`)
