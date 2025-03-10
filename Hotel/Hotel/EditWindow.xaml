@@ -1,0 +1,36 @@
+﻿<Window x:Class="Hotel.EditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hotel"
+        mc:Ignorable="d"
+        Title="EditWindow" Height="240" Width="440">
+    <Grid x:Name="grid" >
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Label Content="Редактирование данных" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Label Content="Комната" Grid.Row="1" Margin="20 5 0 0"/>
+        <TextBox x:Name="roomId" Text="{Binding Path=RoomRoomId}" Margin="25 10 25 5" Grid.Row="1" Grid.Column="1"/>
+        <Label Content="Телефон" Grid.Row="2" Margin="20 5 0 0"/>
+        <TextBox x:Name="textBoxAge" Text="{Binding Path = Phone}" Margin="25 10 25 5" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="Почта" Grid.Row="3" Margin="20 5 0 0"/>
+        <TextBox x:Name="textBoxPayment" Text="{Binding Path = Email}" Margin="25 10 25 5" Grid.Row="3" Grid.Column="1"/>
+        <Label Content="ФИО Руководителя" Grid.Row="4" Margin="20 5 0 0"/>
+        <TextBox x:Name="textBoxgroup" Text="{Binding Path = Manager}" Margin="25 10 25 5" Grid.Row="4" Grid.Column="1"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1">
+            <Button Content="OK" Margin="16 10 16 05" Width="100" Click="ButtonOK_Click"/>
+            <Button Content="Cancel" Margin="16 10 16 5" Width="100" Click="ButtonCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

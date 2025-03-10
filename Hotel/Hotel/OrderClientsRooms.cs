@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Hotel
 {
-    internal class OrderClientsRooms
+    public class OrderClientsRooms
     {
+        public uint ClientId { get; set; }
+        public uint RoomId { get; set; }
+        public DateTime OrderDateAt { get; set; } = DateTime.Now;
+        public DateTime OrderDateEnd { get; set; } = DateTime.Now;
     }
 }

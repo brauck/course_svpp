@@ -19,7 +19,8 @@
         <DataGrid x:Name="dGrid" Grid.Column="1"  ItemsSource="{Binding Path=LoadDataBinding}" IsReadOnly="True" Margin="10"
                   RowHeaderWidth="50"  AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Комната" Binding="{Binding id}"/>
+                <DataGridTextColumn Header="Номер" Binding="{Binding id}"/>
+                <DataGridTextColumn Header="Вместимость" Binding="{Binding rooms_quantity}"/>
                 <DataGridTextColumn Header="Клиент" Binding="{Binding name}"/>
                 <DataGridTextColumn Header="С даты" Binding="{Binding order_date_at}"/>
                 <DataGridTextColumn Header="По дату" Binding="{Binding order_date_end}"/>

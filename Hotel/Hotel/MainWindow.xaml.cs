@@ -49,7 +49,7 @@ namespace Hotel
             {
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(
-                    $"select room.id, client.name, order_date_at, order_date_end" +
+                    $"select room.id, rooms_quantity, client.name, order_date_at, order_date_end" +
                     $" from order_clients_rooms" +
                     $" join  client on  client.id = order_clients_rooms.client_id" +
                     $" join  room on  room.id = order_clients_rooms.room_id order by room.id", conn);
