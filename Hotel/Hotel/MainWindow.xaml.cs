@@ -48,17 +48,15 @@ namespace Hotel
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand($"Select room_id  from order_clients_rooms", conn);
+                MySqlCommand cmd = new MySqlCommand(
+                    $"select room.id, client.name, order_date_at, order_date_end" +
+                    $" from order_clients_rooms" +
+                    $" join  client on  client.id = order_clients_rooms.client_id" +
+                    $" join  room on  room.id = order_clients_rooms.room_id order by room.id", conn);
                 MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
 
                 adp.Fill(dt);
                 dGrid.ItemsSource = dt.DefaultView;
-
-                //MySqlCommandBuilder cb = new MySqlCommandBuilder(adp);
-                //DataSet ds = new DataSet();
-                //adp.Fill(ds, "customers");
-                //dataGridCustomers.DataContext = ds;
-                //MessageBox.Show(ds[0]);
             }
             catch (MySqlException ex)
             {
