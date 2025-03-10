@@ -27,6 +27,8 @@ namespace Hotel
             InitializeComponent();
             this.room = room;
             this.client = client;
+            UInt32.TryParse(roomId.Text, out uint j);
+            room.RoomRoomId = j;
             //this.orderClientsRooms = orderClientsRooms;
             //grid.DataContext = orderClientsRooms;
             //MessageBox.Show(grid.Name);

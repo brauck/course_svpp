@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Hotel
 {
-    public enum ROOMQUANTITY {Single,Double,Triple,Quadruple};
+    public enum ROOMQUANTITY { Одноместный, Двухместный, Трёхместный, Четырёхместный };
     public class Room
     {
         public uint RoomRoomId { get; set; }
-        public uint RoomClientId { get; set; }        
-    }
+        public uint RoomClientId { get; set; }
+        public ROOMQUANTITY roomquantity { get; set; } = ROOMQUANTITY.Одноместный;
+}
 }
