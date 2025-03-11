@@ -21,17 +21,21 @@ namespace Hotel
     {
         Room room;
         Client client;
-        OrderClientsRooms orderClientsRooms;
+        //OrderClientsRooms orderClientsRooms;
         public EditWindow(Room room, Client client/*, OrderClientsRooms orderClientsRooms*/)
         {
             InitializeComponent();
             this.room = room;
             this.client = client;
-            UInt32.TryParse(roomId.Text, out uint j);
+            UInt32.TryParse(roomId.Text, out uint j);            
             room.RoomRoomId = j;
+            //comboBoxQuantity.SelectedItem = ROOMQUANTITY.Одноместный.ToString();
+            //ROOMQUANTITY Quantity { get; set; } = ROOMQUANTITY.Одноместный;
+            comboBoxQuantity.DataContext = room;
+            client.Name = textBoxCliet.Text;
             //this.orderClientsRooms = orderClientsRooms;
             //grid.DataContext = orderClientsRooms;
-            //MessageBox.Show(grid.Name);
+            //MessageBox.Show("grid.Name");
             //string str = grid.Name;
         }
 

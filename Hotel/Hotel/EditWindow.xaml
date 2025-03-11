@@ -6,7 +6,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:Hotel"
         mc:Ignorable="d"
-        Title="EditWindow" Height="240" Width="440">
+        Title="EditWindow" Height="300" Width="440">
     <Window.Resources>
         <ObjectDataProvider x:Key="QuantityFromEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -22,6 +22,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -31,13 +32,15 @@
         <Label Content="Комната" Grid.Row="1" Margin="20 5 0 0"/>
         <TextBox x:Name="roomId" Text="{Binding Path=RoomRoomId}" Margin="25 10 25 5" Grid.Row="1" Grid.Column="1"/>
         <Label Content="Вместимость" Grid.Row="2" Margin="20 5 0 0"/>
-        <ComboBox x:Name="comboBoxQuantity" VerticalAlignment="Center" Width="150" SelectedValue="{Binding Coloreyes}"
-          ItemsSource="{Binding Source={StaticResource QuantityFromEnum}}"/>
-        <Label Content="Почта" Grid.Row="3" Margin="20 5 0 0"/>
-        <TextBox x:Name="textBoxPayment" Text="{Binding Path = Email}" Margin="25 10 25 5" Grid.Row="3" Grid.Column="1"/>
-        <Label Content="ФИО Руководителя" Grid.Row="4" Margin="20 5 0 0"/>
-        <TextBox x:Name="textBoxgroup" Text="{Binding Path = Manager}" Margin="25 10 25 5" Grid.Row="4" Grid.Column="1"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1">
+        <ComboBox x:Name="comboBoxQuantity"  Margin="25 10 25 0" SelectedValue="{Binding Roomquantity}"
+          ItemsSource="{Binding Source={StaticResource QuantityFromEnum}}"  Grid.Row="2" Grid.Column="1"/>        
+        <Label Content="ФИО Клиента" Grid.Row="3" Margin="20 5 0 0"/>
+        <TextBox x:Name="textBoxCliet" Text="{Binding Path = Client}" Margin="25 10 25 5" Grid.Row="3" Grid.Column="1"/>
+        <Label Content="Дата заселения" Grid.Row="4" Margin="20 5 0 0"/>
+        <DatePicker x:Name="datePickerIn" VerticalAlignment="Center"  Grid.Row="4" Grid.Column="1"/>
+        <Label Content="Дата выселения" Grid.Row="5" Margin="20 5 0 0"/>
+        <DatePicker x:Name="datePickerOut" VerticalAlignment="Center"  Grid.Row="5" Grid.Column="1"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1">
             <Button Content="OK" Margin="16 10 16 05" Width="100" Click="ButtonOK_Click"/>
             <Button Content="Cancel" Margin="16 10 16 5" Width="100" Click="ButtonCancel_Click"/>
         </StackPanel>

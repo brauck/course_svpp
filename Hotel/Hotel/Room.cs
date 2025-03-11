@@ -11,6 +11,6 @@ namespace Hotel
     {
         public uint RoomRoomId { get; set; }
         public uint RoomClientId { get; set; }
-        public ROOMQUANTITY roomquantity { get; set; } = ROOMQUANTITY.Одноместный;
+        public ROOMQUANTITY Roomquantity { get; set; } = ROOMQUANTITY.Одноместный;
 }
 }

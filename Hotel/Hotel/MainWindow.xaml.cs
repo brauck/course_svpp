@@ -29,7 +29,10 @@ namespace Hotel
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            Room room = new();
+            Client client = new();
+            EditWindow editWindow = new EditWindow(room, client);
+            if (editWindow.ShowDialog() == false) return;
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
