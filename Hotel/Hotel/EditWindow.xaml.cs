@@ -11,8 +11,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using MySql.Data.MySqlClient;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using static Org.BouncyCastle.Bcpg.Attr.ImageAttrib;
 
 namespace Hotel
 {
@@ -33,8 +35,8 @@ namespace Hotel
             InitializeComponent();
             this.room = room;
             this.client = client;
-            UInt32.TryParse(roomId.Text, out uint j);            
-            room.RoomRoomId = j;
+            //UInt32.TryParse(roomId.Text, out uint j);            
+            //room.RoomRoomId = j;
             comboBoxQuantity.DataContext = room;
             client.Name = textBoxCliet.Text;
             datePickerIn.SelectedDate = DateTime.Now;
@@ -44,7 +46,6 @@ namespace Hotel
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = true;
-            string room = roomId.Text;
             string quantity = "";
             string name = textBoxCliet.Text;
             switch (comboBoxQuantity.SelectedIndex)
@@ -54,6 +55,7 @@ namespace Hotel
                 case 2: quantity = "Трёхместный"; break;
                 case 3: quantity = "Четырёхместный"; break;
             }
+            string room = chooseRoom(quantity);
             string format = "yyyy-MM-dd HH:mm:ss";
             DateTime ddateIn = (DateTime)datePickerIn.SelectedDate;
             DateTime ddateOut = (DateTime)datePickerOut.SelectedDate;
@@ -68,7 +70,7 @@ namespace Hotel
             this.Close();
         }
 
-        public void InsertData(string room, string quantity, string name, string dateIn, string dateOut)
+        private void InsertData(string room, string quantity, string name, string dateIn, string dateOut)
         {
             flag = "insert";
 
@@ -102,6 +104,48 @@ namespace Hotel
             {
                 conn.Close();
             }
+        }
+
+        private string chooseRoom(string quantity)
+        {
+            string format = "yyyy-MM-dd HH:mm:ss";
+            DateTime ddateIn = (DateTime)datePickerIn.SelectedDate;
+            DateTime ddateOut = (DateTime)datePickerOut.SelectedDate;
+            string dateIn = ddateIn.ToString(format);
+            string dateOut = ddateOut.ToString(format);
+            string room;
+
+            conn.Open();
+
+            string sql = $"select room_id from order_clients_rooms" +
+                $" join room on room.id = room_id" +
+                $" where rooms_quantity = '{quantity}'" +
+                $" and order_date_at > '2025-09-02 02:29:21'" +
+                $" and order_date_end < '2025-09-02 02:29:21'" +
+                $" or order_date_at > '2025-09-02 02:29:21'" +
+                $" order by order_date_at desc" +
+                $" limit 1;";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+            try
+            {
+                object result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    room = result.ToString();
+                    MessageBox.Show(room);
+                    return room;
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return "";
         }
     }
 }

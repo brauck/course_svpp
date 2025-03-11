@@ -33,6 +33,7 @@ namespace Hotel
             Client client = new();
             EditWindow editWindow = new EditWindow(room, client);
             if (editWindow.ShowDialog() == false) return;
+            loaddata();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -45,7 +46,7 @@ namespace Hotel
 
         }
 
-        private void loaddata()
+        public void loaddata()
         {
             DataTable dt = new DataTable();
             try
