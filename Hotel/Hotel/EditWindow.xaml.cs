@@ -78,9 +78,7 @@ namespace Hotel
             MySqlTransaction Tran = conn.BeginTransaction();
 
             try
-            {
-                
-
+            {  
                 MySqlCommand cmd = new MySqlCommand($"INSERT INTO `client` (`name`) VALUES ('{name}')", conn);
                 cmd.Transaction = Tran;
                 cmd.ExecuteNonQuery();
@@ -113,32 +111,44 @@ namespace Hotel
             DateTime ddateOut = (DateTime)datePickerOut.SelectedDate;
             string dateIn = ddateIn.ToString(format);
             string dateOut = ddateOut.ToString(format);
+            DateTime dateTime = DateTime.Now;
             string room;
+            string now;
+            now = dateTime.ToString(format);
 
-            conn.Open();
+            MessageBox.Show(dateIn);
+            MessageBox.Show(dateOut);
 
             string sql = $"select room_id from order_clients_rooms" +
                 $" join room on room.id = room_id" +
-                $" where rooms_quantity = '{quantity}'" +
-                $" and order_date_at > '2025-09-02 02:29:21'" +
-                $" and order_date_end < '2025-09-02 02:29:21'" +
-                $" or order_date_at > '2025-09-02 02:29:21'" +
+                $" where (rooms_quantity = '{quantity}'" +
+                $" and order_date_at > '{dateIn}'" +
+                $" and order_date_at > '{dateOut}')" +
+                $" or (rooms_quantity = '{quantity}'" +
+                $" and order_date_end < '{dateIn}'" +
+                $" and order_date_end > '{now}')" +
                 $" order by order_date_at desc" +
                 $" limit 1;";
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
 
+
+            conn.Open();            
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
             try
             {
                 object result = cmd.ExecuteScalar();
+                MessageBox.Show($"now{now}");
+                cmd = new MySqlCommand(sql, conn);
+                result = cmd.ExecuteScalar();
                 if (result != null)
                 {
                     room = result.ToString();
-                    MessageBox.Show(room);
+                    MessageBox.Show($"room{room}");
                     return room;
                 }
             }
             catch (MySqlException ex)
             {
+                MessageBox.Show($"now{now}");
                 MessageBox.Show(ex.ToString());
             }
             finally

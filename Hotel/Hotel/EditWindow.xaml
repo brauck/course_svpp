@@ -29,14 +29,14 @@
         </Grid.ColumnDefinitions>
         <Label Content="Редактирование данных" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>        
         <Label Content="Размер номера" Grid.Row="1" Margin="20 5 0 0"/>
-        <ComboBox x:Name="comboBoxQuantity"  Margin="25 10 25 0" SelectedValue="{Binding Roomquantity}"
+        <ComboBox x:Name="comboBoxQuantity"  Margin="25 10 25 5" SelectedValue="{Binding Roomquantity}"
           ItemsSource="{Binding Source={StaticResource QuantityFromEnum}}"  Grid.Row="1" Grid.Column="1"/>        
-        <Label Content="ФИО Клиента" Grid.Row="2" Margin="20 5 0 0"/>
+        <Label Content="ФИО Клиента" Grid.Row="2" Margin="25 10 25 5"/>
         <TextBox x:Name="textBoxCliet" Text="{Binding Path = Client}" Margin="25 10 25 5" Grid.Row="2" Grid.Column="1"/>
         <Label Content="Дата заселения" Grid.Row="3" Margin="20 5 0 0"/>
-        <DatePicker x:Name="datePickerIn" VerticalAlignment="Center"  Grid.Row="3" Grid.Column="1"/>
+        <DatePicker x:Name="datePickerIn" VerticalAlignment="Center" Margin="25 0"  Grid.Row="3" Grid.Column="1"/>
         <Label Content="Дата выселения" Grid.Row="4" Margin="20 5 0 0"/>
-        <DatePicker x:Name="datePickerOut" VerticalAlignment="Center"  Grid.Row="4" Grid.Column="1"/>
+        <DatePicker x:Name="datePickerOut" VerticalAlignment="Center" Margin="25 0"  Grid.Row="4" Grid.Column="1"/>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1">
             <Button Content="OK" Margin="16 10 16 05" Width="100" Click="ButtonOK_Click"/>
             <Button Content="Cancel" Margin="16 10 16 5" Width="100" Click="ButtonCancel_Click"/>

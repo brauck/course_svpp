@@ -46,6 +46,11 @@ namespace Hotel
 
         }
 
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         public void loaddata()
         {
             DataTable dt = new DataTable();
@@ -70,6 +75,6 @@ namespace Hotel
             {
                 conn.Close();
             }
-        }
+        }        
     }
 }
