@@ -21,6 +21,9 @@ namespace Hotel
     /// </summary>
     public partial class EditWindow : Window
     {
+        const string connStr = "server=localhost;user=root;database=hotel;port=3306;password=root";
+        MySqlConnection conn = new MySqlConnection(connStr);
+
         Room room;
         Client client;
         string flag;
@@ -68,20 +71,32 @@ namespace Hotel
         public void InsertData(string room, string quantity, string name, string dateIn, string dateOut)
         {
             flag = "insert";
-            const string connStr = "server=localhost;user=root;database=hotel;port=3306;password=root";
-            MySqlConnection conn = new MySqlConnection(connStr);
-            
+
+            conn.Open();
+            MySqlTransaction Tran = conn.BeginTransaction();
+
             try
             {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand($"INSERT INTO `client` (`name`, `email`, `password`, `hash_password`, `phone`, `created_at`, `modified_at`) VALUES ('Наталья Сергеевич Капустин', 'светлана.блохин@example.com', 'dicta', 'b032613fe9b8b85136150b04daa376aca89dcf37', '(495) 571-5920', '{dateIn}', '1972-03-18 04:34:58')", conn);                
+                
+
+                MySqlCommand cmd = new MySqlCommand($"INSERT INTO `client` (`name`) VALUES ('{name}')", conn);
+                cmd.Transaction = Tran;
                 cmd.ExecuteNonQuery();
                 long clientId = cmd.LastInsertedId;
                 MessageBox.Show(clientId.ToString());
+
+                cmd = new MySqlCommand($"UPDATE room SET `client_id`='{clientId}', `rooms_quantity`='{quantity}' WHERE `id`='{room}'", conn);
+                cmd.ExecuteNonQuery();
+
+                cmd = new MySqlCommand($"INSERT INTO `order_clients_rooms` (`client_id`, `room_id`, `order_date_at`, `order_date_end`) VALUES ('{clientId}', '{room}', '{dateIn}', '{dateOut}');", conn);
+                cmd.ExecuteNonQuery();
+
+                Tran.Commit();
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show(ex.ToString());
+                Tran.Rollback();
+                MessageBox.Show(ex.ToString());                
             }
             finally
             {
