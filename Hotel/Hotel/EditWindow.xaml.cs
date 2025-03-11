@@ -119,17 +119,24 @@ namespace Hotel
             MessageBox.Show(dateIn);
             MessageBox.Show(dateOut);
 
+            //string sql = $"select room_id from order_clients_rooms" +
+            //    $" join room on room.id = room_id" +
+            //    $" where (rooms_quantity = '{quantity}'" +
+            //    $" and order_date_at > '{dateIn}'" +
+            //    $" and order_date_at > '{dateOut}')" +
+            //    $" or (rooms_quantity = '{quantity}'" +
+            //    $" and order_date_end < '{dateIn}'" +
+            //    $" and order_date_end > '{now}')" +
+            //    $" order by order_date_at desc" +
+            //    $" limit 1;";
+
             string sql = $"select room_id from order_clients_rooms" +
                 $" join room on room.id = room_id" +
                 $" where (rooms_quantity = '{quantity}'" +
                 $" and order_date_at > '{dateIn}'" +
                 $" and order_date_at > '{dateOut}')" +
-                $" or (rooms_quantity = '{quantity}'" +
-                $" and order_date_end < '{dateIn}'" +
-                $" and order_date_end > '{now}')" +
                 $" order by order_date_at desc" +
                 $" limit 1;";
-
 
             conn.Open();            
             MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -148,7 +155,7 @@ namespace Hotel
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show($"now{now}");
+                MessageBox.Show($"now{now} in error");
                 MessageBox.Show(ex.ToString());
             }
             finally
