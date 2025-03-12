@@ -21,7 +21,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="1.2*"></RowDefinition>
+            <RowDefinition ></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -32,7 +32,7 @@
         <Label Content="Размер номера" Grid.Row="1" Margin="20 5 0 0"/>
         <ComboBox x:Name="comboBoxQuantity"  Margin="25 10 25 5" SelectedValue="{Binding Roomquantity}"
           ItemsSource="{Binding Source={StaticResource QuantityFromEnum}}"  Grid.Row="1" Grid.Column="1"/>        
-        <Label Content="ФИО Клиента" Grid.Row="2" Margin="25 10 25 5"/>
+        <Label Content="ФИО Клиента" Grid.Row="2" Margin="25 5 25 5"/>
         <TextBox x:Name="textBoxCliet" Text="{Binding Path = Client}" Margin="25 10 25 5" Grid.Row="2" Grid.Column="1"/>
         <Label Content="Дата заселения" Grid.Row="3" Margin="20 5 0 0"/>
         <DatePicker x:Name="datePickerIn" VerticalAlignment="Center" Margin="25 0"  Grid.Row="3" Grid.Column="1"/>

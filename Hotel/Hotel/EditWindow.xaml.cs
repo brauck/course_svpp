@@ -29,18 +29,18 @@ namespace Hotel
         Room room;
         Client client;
         string flag;
-        string one;
-        string two;
-        string three;
-        string four;
+        //string one;
+        //string two;
+        //string three;
+        //string four;
         //OrderClientsRooms orderClientsRooms;
         public EditWindow(Room room, Client client/*, OrderClientsRooms orderClientsRooms*/)
         {
             InitializeComponent();
-            CountRooms("Одноместный");
-            CountRooms("Двухместный");
-            CountRooms("Трёхместный");
-            CountRooms("Четырёхместный");
+            //CountRooms("Одноместный");
+            //CountRooms("Двухместный");
+            //CountRooms("Трёхместный");
+            //CountRooms("Четырёхместный");
             this.room = room;
             this.client = client;
             //UInt32.TryParse(roomId.Text, out uint j);            
@@ -63,18 +63,21 @@ namespace Hotel
                 case 3: quantity = "Четырёхместный"; break;
             }
             string room = chooseRoom(quantity);
+            
             if (room == "")
             {
+                DialogResult = true;
                 return;
             }
             DialogResult = true;
+            MessageBox.Show($"Выбран номер {room}");
 
             string format = "yyyy-MM-dd HH:mm:ss";
             DateTime ddateIn = (DateTime)datePickerIn.SelectedDate;
             DateTime ddateOut = (DateTime)datePickerOut.SelectedDate;
             string dateIn = ddateIn.ToString(format);
             string dateOut = ddateOut.ToString(format);
-            MessageBox.Show(dateIn);
+            //MessageBox.Show(dateIn);
             InsertData(room, quantity, name, dateIn, dateOut);
         }
 
@@ -96,7 +99,7 @@ namespace Hotel
                 cmd.Transaction = Tran;
                 cmd.ExecuteNonQuery();
                 long clientId = cmd.LastInsertedId;
-                MessageBox.Show(clientId.ToString());
+                //MessageBox.Show(clientId.ToString());
 
                 cmd = new MySqlCommand($"UPDATE room SET `client_id`='{clientId}', `rooms_quantity`='{quantity}' WHERE `id`='{room}'", conn);
                 cmd.ExecuteNonQuery();
@@ -136,69 +139,69 @@ namespace Hotel
             string now;
             now = dateTime.ToString(format);
 
-            MessageBox.Show(dateIn);
-            MessageBox.Show(dateOut);
+            //MessageBox.Show(dateIn);
+            //MessageBox.Show(dateOut);
 //-------------------------------------------------------------------------------
             // Проверка даты заселения
-            string sql = $"select count(*) from order_clients_rooms" +
-                $" join room on room.id = room_id" +
-                $" where rooms_quantity = '{quantity}'" +
-                $" and order_date_end > '{dateIn}'" +
-                $" and order_date_at < '{dateIn}'";
+            //string sql = $"select count(*) from order_clients_rooms" +
+            //    $" join room on room.id = room_id" +
+            //    $" where rooms_quantity = '{quantity}'" +
+            //    $" and order_date_end > '{dateIn}'" +
+            //    $" and order_date_at < '{dateIn}'";
 
-            string isIn = "";
-            conn.Open();            
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            try
-            {
-                object result = cmd.ExecuteScalar();
-                result = cmd.ExecuteScalar();
-                if (result != null)
-                {
-                    isIn = result.ToString();
-                    //textBoxMessage.Content = $"На выбранную дату нет свободных номеров\nЗаселение возможно после {dateIn}";
-                    return "";
-                }
-            }
-            catch (MySqlException ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            finally
-            {
-                conn.Close();
-            }
+            //string isIn = "";
+            //conn.Open();            
+            //MySqlCommand cmd = new MySqlCommand(sql, conn);
+            //try
+            //{
+            //    object result = cmd.ExecuteScalar();
+            //    result = cmd.ExecuteScalar();
+            //    if (result != null)
+            //    {
+            //        isIn = result.ToString();
+            //        //textBoxMessage.Content = $"На выбранную дату нет свободных номеров\nЗаселение возможно после {dateIn}";
+            //        return "";
+            //    }
+            //}
+            //catch (MySqlException ex)
+            //{
+            //    MessageBox.Show(ex.ToString());
+            //}
+            //finally
+            //{
+            //    conn.Close();
+            //}
 
-            if (isIn == CountRooms(quantity))
-            {
-                sql = $"select order_date_ from order_clients_rooms" +
-                $" join room on room.id = room_id" +
-                $" where rooms_quantity = '{quantity}'" +
-                $" and order_date_end > '{dateIn}'" +
-                $" order by order_date_end" +
-                $" limit 1";
+            //if (isIn == CountRooms(quantity))
+            //{
+            //    sql = $"select order_date_ from order_clients_rooms" +
+            //    $" join room on room.id = room_id" +
+            //    $" where rooms_quantity = '{quantity}'" +
+            //    $" and order_date_end > '{dateIn}'" +
+            //    $" order by order_date_end" +
+            //    $" limit 1";
 
-                cmd = new MySqlCommand(sql, conn);
-                try
-                {
-                    object result = cmd.ExecuteScalar();
-                    result = cmd.ExecuteScalar();
-                    if (result != null)
-                    {
-                        dateIn = result.ToString();
-                        textBoxMessage.Content = $"На выбранную дату нет свободных номеров\nЗаселение возможно после {dateIn}";
-                        return "";
-                    }
-                }
-                catch (MySqlException ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-                finally
-                {
-                    conn.Close();
-                }
-            }
+            //    cmd = new MySqlCommand(sql, conn);
+            //    try
+            //    {
+            //        object result = cmd.ExecuteScalar();
+            //        result = cmd.ExecuteScalar();
+            //        if (result != null)
+            //        {
+            //            dateIn = result.ToString();
+            //            textBoxMessage.Content = $"На выбранную дату нет свободных номеров\nЗаселение возможно после {dateIn}";
+            //            return "";
+            //        }
+            //    }
+            //    catch (MySqlException ex)
+            //    {
+            //        MessageBox.Show(ex.ToString());
+            //    }
+            //    finally
+            //    {
+            //        conn.Close();
+            //    }
+            //}
             //else
             //{
             //    sql = $"select room_id from order_clients_rooms" +
@@ -231,24 +234,84 @@ namespace Hotel
 
             //-----------------------------------------------------------------------------------
             // Проверка даты выселения
-            sql = $"select count(*) order_date_at from order_clients_rooms" +
+            //sql = $"select count(*) order_date_at from order_clients_rooms" +
+            //    $" join room on room.id = room_id" +
+            //    $" where rooms_quantity = '{quantity}'" +
+            //    $" where order_date_end > '{dateOut}'" +
+            //    $" and order_date_at < '{dateOut}'" +
+            //    $" limit 1";
+
+            //string isOut = "";
+            //conn.Open();
+            //cmd = new MySqlCommand(sql, conn);
+            //try
+            //{
+            //    object result = cmd.ExecuteScalar();
+            //    result = cmd.ExecuteScalar();
+            //    if (result != null)
+            //    {
+            //        isOut = result.ToString();
+            //        //textBoxMessage.Content = $"На выбранную дату нет свободных номеров\nЗаселение возможно после {dateIn}";
+            //    }
+            //}
+            //catch (MySqlException ex)
+            //{
+            //    MessageBox.Show(ex.ToString());
+            //}
+            //finally
+            //{
+            //    conn.Close();
+            //}
+
+            //if (isOut == CountRooms(quantity))
+            //{
+            //    sql = $"select order_date_end from order_clients_rooms" +
+            //    $" join room on room.id = room_id" +
+            //    $" where rooms_quantity = '{quantity}'" +
+            //    $" and order_date_at < '{dateOut}'" +
+            //    $" order by desc" +
+            //    $" limit 1";
+
+            //    cmd = new MySqlCommand(sql, conn);
+            //    try
+            //    {
+            //        object result = cmd.ExecuteScalar();
+            //        result = cmd.ExecuteScalar();
+            //        if (result != null)
+            //        {
+            //            dateIn = result.ToString();
+            //            textBoxMessage.Content = $"Выселение возможно только до {dateOut}";
+            //            return "";
+            //        }
+            //    }
+            //    catch (MySqlException ex)
+            //    {
+            //        MessageBox.Show(ex.ToString());
+            //    }
+            //    finally
+            //    {
+            //        conn.Close();
+            //    }
+            //}
+            //------------------------------------------------------------------------------------
+            // Выбор номера
+            string sql = $"select room_id from order_clients_rooms" +
                 $" join room on room.id = room_id" +
                 $" where rooms_quantity = '{quantity}'" +
-                $" where order_date_end > '{dateOut}'" +
-                $" and order_date_at < '{dateOut}'" +
+                $" and order_date_end > '{dateOut}'" +
+                $" and order_date_at < '{dateIn}'" +
                 $" limit 1";
 
-            string isOut = "";
             conn.Open();
-            cmd = new MySqlCommand(sql, conn);
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
             try
             {
                 object result = cmd.ExecuteScalar();
                 result = cmd.ExecuteScalar();
                 if (result != null)
                 {
-                    isOut = result.ToString();
-                    //textBoxMessage.Content = $"На выбранную дату нет свободных номеров\nЗаселение возможно после {dateIn}";
+                    room = result.ToString();
+                    return room;
                 }
             }
             catch (MySqlException ex)
@@ -259,38 +322,6 @@ namespace Hotel
             {
                 conn.Close();
             }
-
-            if (isOut == CountRooms(quantity))
-            {
-                sql = $"select order_date_end from order_clients_rooms" +
-                $" join room on room.id = room_id" +
-                $" where rooms_quantity = '{quantity}'" +
-                $" and order_date_at < '{dateOut}'" +
-                $" order by desc" +
-                $" limit 1";
-
-                cmd = new MySqlCommand(sql, conn);
-                try
-                {
-                    object result = cmd.ExecuteScalar();
-                    result = cmd.ExecuteScalar();
-                    if (result != null)
-                    {
-                        dateIn = result.ToString();
-                        textBoxMessage.Content = $"Выселение возможно только до {dateOut}";
-                        return "";
-                    }
-                }
-                catch (MySqlException ex)
-                {
-                    MessageBox.Show(ex.ToString());
-                }
-                finally
-                {
-                    conn.Close();
-                }
-            }
-
             return "";
         }
 
@@ -307,8 +338,7 @@ namespace Hotel
                 result = cmd.ExecuteScalar();
                 if (result != null)
                 {
-                    string numRooms = result.ToString();                    
-                    MessageBox.Show(numRooms);
+                    string numRooms = result.ToString(); 
                     conn.Close();
                     return numRooms;
                 }                
