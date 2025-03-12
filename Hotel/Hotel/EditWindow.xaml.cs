@@ -25,14 +25,22 @@ namespace Hotel
     {
         const string connStr = "server=localhost;user=root;database=hotel;port=3306;password=root";
         MySqlConnection conn = new MySqlConnection(connStr);
-
+        
         Room room;
         Client client;
         string flag;
+        string one;
+        string two;
+        string three;
+        string four;
         //OrderClientsRooms orderClientsRooms;
         public EditWindow(Room room, Client client/*, OrderClientsRooms orderClientsRooms*/)
         {
             InitializeComponent();
+            CountRooms("Одноместный");
+            CountRooms("Двухместный");
+            CountRooms("Трёхместный");
+            CountRooms("Четырёхместный");
             this.room = room;
             this.client = client;
             //UInt32.TryParse(roomId.Text, out uint j);            
@@ -44,8 +52,7 @@ namespace Hotel
         }
 
         private void ButtonOK_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
+        {            
             string quantity = "";
             string name = textBoxCliet.Text;
             switch (comboBoxQuantity.SelectedIndex)
@@ -56,6 +63,12 @@ namespace Hotel
                 case 3: quantity = "Четырёхместный"; break;
             }
             string room = chooseRoom(quantity);
+            if (room == "")
+            {
+                return;
+            }
+            DialogResult = true;
+
             string format = "yyyy-MM-dd HH:mm:ss";
             DateTime ddateIn = (DateTime)datePickerIn.SelectedDate;
             DateTime ddateOut = (DateTime)datePickerOut.SelectedDate;
@@ -109,8 +122,15 @@ namespace Hotel
             string format = "yyyy-MM-dd HH:mm:ss";
             DateTime ddateIn = (DateTime)datePickerIn.SelectedDate;
             DateTime ddateOut = (DateTime)datePickerOut.SelectedDate;
+            if (ddateIn > ddateOut)
+            {
+                textBoxMessage.Content = $"Дата выселения не может\nбыть раньше заселения";
+                return "";
+            }
             string dateIn = ddateIn.ToString(format);
             string dateOut = ddateOut.ToString(format);
+            
+
             DateTime dateTime = DateTime.Now;
             string room;
             string now;
@@ -118,34 +138,15 @@ namespace Hotel
 
             MessageBox.Show(dateIn);
             MessageBox.Show(dateOut);
-
-            //string sql = $"select room_id from order_clients_rooms" +
-            //    $" join room on room.id = room_id" +
-            //    $" where (rooms_quantity = '{quantity}'" +
-            //    $" and order_date_at > '{dateIn}'" +
-            //    $" and order_date_at > '{dateOut}')" +
-            //    $" or (rooms_quantity = '{quantity}'" +
-            //    $" and order_date_end < '{dateIn}'" +
-            //    $" and order_date_end > '{now}')" +
-            //    $" order by order_date_at desc" +
-            //    $" limit 1;";
-
-            //string sql = $"select room_id from order_clients_rooms" +
-            //    $" join room on room.id = room_id" +
-            //    $" where (rooms_quantity = '{quantity}'" +
-            //    $" and order_date_at > '{dateIn}'" +
-            //    $" and order_date_at > '{dateOut}')" +
-            //    $" order by order_date_at desc" +
-            //    $" limit 1;";
-
+//-------------------------------------------------------------------------------
             // Проверка даты заселения
-            string sql = $"select order_date_end from order_clients_rooms" +
+            string sql = $"select count(*) from order_clients_rooms" +
                 $" join room on room.id = room_id" +
-                $" where order_date_end > '{dateIn}'" +
-                $" and order_date_at < '{dateIn}'" +
-                $" order by order_date_end desc" +
-                $" limit 1";
+                $" where rooms_quantity = '{quantity}'" +
+                $" and order_date_end > '{dateIn}'" +
+                $" and order_date_at < '{dateIn}'";
 
+            string isIn = "";
             conn.Open();            
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             try
@@ -154,20 +155,169 @@ namespace Hotel
                 result = cmd.ExecuteScalar();
                 if (result != null)
                 {
-                    dateIn = result.ToString();
-
-                    MessageBox.Show($"room{dateIn}");
-                    return dateIn;
+                    isIn = result.ToString();
+                    //textBoxMessage.Content = $"На выбранную дату нет свободных номеров\nЗаселение возможно после {dateIn}";
+                    return "";
                 }
             }
             catch (MySqlException ex)
             {
-                MessageBox.Show($"now{now} in error");
                 MessageBox.Show(ex.ToString());
             }
             finally
             {
                 conn.Close();
+            }
+
+            if (isIn == CountRooms(quantity))
+            {
+                sql = $"select order_date_ from order_clients_rooms" +
+                $" join room on room.id = room_id" +
+                $" where rooms_quantity = '{quantity}'" +
+                $" and order_date_end > '{dateIn}'" +
+                $" order by order_date_end" +
+                $" limit 1";
+
+                cmd = new MySqlCommand(sql, conn);
+                try
+                {
+                    object result = cmd.ExecuteScalar();
+                    result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        dateIn = result.ToString();
+                        textBoxMessage.Content = $"На выбранную дату нет свободных номеров\nЗаселение возможно после {dateIn}";
+                        return "";
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            //else
+            //{
+            //    sql = $"select room_id from order_clients_rooms" +
+            //    $" join room on room.id = room_id" +
+            //    $" where rooms_quantity = '{quantity}'" +
+            //    $" and order_date_end > '{dateIn}'" +
+            //    $" order by desc" +
+            //    $"limit 1";
+
+            //    cmd = new MySqlCommand(sql, conn);
+            //    try
+            //    {
+            //        object result = cmd.ExecuteScalar();
+            //        result = cmd.ExecuteScalar();
+            //        if (result != null)
+            //        {
+            //            dateIn = result.ToString();
+            //            return "";
+            //        }
+            //    }
+            //    catch (MySqlException ex)
+            //    {
+            //        MessageBox.Show(ex.ToString());
+            //    }
+            //    finally
+            //    {
+            //        conn.Close();
+            //    }
+            //}
+
+            //-----------------------------------------------------------------------------------
+            // Проверка даты выселения
+            sql = $"select count(*) order_date_at from order_clients_rooms" +
+                $" join room on room.id = room_id" +
+                $" where rooms_quantity = '{quantity}'" +
+                $" where order_date_end > '{dateOut}'" +
+                $" and order_date_at < '{dateOut}'" +
+                $" limit 1";
+
+            string isOut = "";
+            conn.Open();
+            cmd = new MySqlCommand(sql, conn);
+            try
+            {
+                object result = cmd.ExecuteScalar();
+                result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    isOut = result.ToString();
+                    //textBoxMessage.Content = $"На выбранную дату нет свободных номеров\nЗаселение возможно после {dateIn}";
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            if (isOut == CountRooms(quantity))
+            {
+                sql = $"select order_date_end from order_clients_rooms" +
+                $" join room on room.id = room_id" +
+                $" where rooms_quantity = '{quantity}'" +
+                $" and order_date_at < '{dateOut}'" +
+                $" order by desc" +
+                $" limit 1";
+
+                cmd = new MySqlCommand(sql, conn);
+                try
+                {
+                    object result = cmd.ExecuteScalar();
+                    result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        dateIn = result.ToString();
+                        textBoxMessage.Content = $"Выселение возможно только до {dateOut}";
+                        return "";
+                    }
+                }
+                catch (MySqlException ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+
+            return "";
+        }
+
+
+        private string CountRooms(string quantity)
+        {
+            string sql = $"select count(*) from room " +
+                $" where rooms_quantity = '{quantity}'";
+            conn.Open();
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            try
+            {
+                object result = cmd.ExecuteScalar();
+                result = cmd.ExecuteScalar();
+                if (result != null)
+                {
+                    string numRooms = result.ToString();                    
+                    MessageBox.Show(numRooms);
+                    conn.Close();
+                    return numRooms;
+                }                
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.ToString());                
+                conn.Close();
+                return "";
             }
             return "";
         }

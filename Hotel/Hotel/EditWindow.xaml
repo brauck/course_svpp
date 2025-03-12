@@ -21,6 +21,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition Height="1.2*"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -37,7 +38,9 @@
         <DatePicker x:Name="datePickerIn" VerticalAlignment="Center" Margin="25 0"  Grid.Row="3" Grid.Column="1"/>
         <Label Content="Дата выселения" Grid.Row="4" Margin="20 5 0 0"/>
         <DatePicker x:Name="datePickerOut" VerticalAlignment="Center" Margin="25 0"  Grid.Row="4" Grid.Column="1"/>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1">
+        <Label x:Name="textBoxMessage" Content="" Margin="25 0" Grid.Row="5" Grid.Column="1" 
+               FontSize="10" Foreground="#FF580909"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1">            
             <Button Content="OK" Margin="16 10 16 05" Width="100" Click="ButtonOK_Click"/>
             <Button Content="Cancel" Margin="16 10 16 5" Width="100" Click="ButtonCancel_Click"/>
         </StackPanel>
