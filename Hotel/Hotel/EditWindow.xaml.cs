@@ -130,27 +130,34 @@ namespace Hotel
             //    $" order by order_date_at desc" +
             //    $" limit 1;";
 
-            string sql = $"select room_id from order_clients_rooms" +
+            //string sql = $"select room_id from order_clients_rooms" +
+            //    $" join room on room.id = room_id" +
+            //    $" where (rooms_quantity = '{quantity}'" +
+            //    $" and order_date_at > '{dateIn}'" +
+            //    $" and order_date_at > '{dateOut}')" +
+            //    $" order by order_date_at desc" +
+            //    $" limit 1;";
+
+            // Проверка даты заселения
+            string sql = $"select order_date_end from order_clients_rooms" +
                 $" join room on room.id = room_id" +
-                $" where (rooms_quantity = '{quantity}'" +
-                $" and order_date_at > '{dateIn}'" +
-                $" and order_date_at > '{dateOut}')" +
-                $" order by order_date_at desc" +
-                $" limit 1;";
+                $" where order_date_end > '{dateIn}'" +
+                $" and order_date_at < '{dateIn}'" +
+                $" order by order_date_end desc" +
+                $" limit 1";
 
             conn.Open();            
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             try
             {
                 object result = cmd.ExecuteScalar();
-                MessageBox.Show($"now{now}");
-                cmd = new MySqlCommand(sql, conn);
                 result = cmd.ExecuteScalar();
                 if (result != null)
                 {
-                    room = result.ToString();
-                    MessageBox.Show($"room{room}");
-                    return room;
+                    dateIn = result.ToString();
+
+                    MessageBox.Show($"room{dateIn}");
+                    return dateIn;
                 }
             }
             catch (MySqlException ex)
