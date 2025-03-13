@@ -11,7 +11,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Hotel
 {
@@ -130,7 +129,6 @@ namespace Hotel
         private void btnHome_Click(object sender, RoutedEventArgs e)
         {
             loaddata();
-            List.Content = $"Все заявки";
         }
     }
 }

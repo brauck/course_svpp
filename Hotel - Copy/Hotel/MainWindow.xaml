@@ -6,13 +6,12 @@
         xmlns:local="clr-namespace:Hotel"
         mc:Ignorable="d"
         Title="Гостиница" Height="600" Width="900">
-    <Window.Resources>
-        
+    <Window.Resources>        
         <Style TargetType="{x:Type Button}">
             <Setter Property="Margin" Value="5,5"/>
         </Style>
     </Window.Resources>
-    <Grid Background="#FFD1DEC5">        
+    <Grid>        
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition/>
@@ -30,7 +29,7 @@
             <Button x:Name="btnLogin" Content="Login" Grid.Column="1" Click="btnLogin_Click"/>
         </Grid>
         <DataGrid x:Name="dGrid"  ItemsSource="{Binding Path=LoadDataBinding}" IsReadOnly="True" Margin="10 0 10 10"
-                  RowHeaderWidth="50"  AutoGenerateColumns="False" Grid.Column="1" Grid.Row="1" Background="#FFE8EADE" >
+                  RowHeaderWidth="50"  AutoGenerateColumns="False" Grid.Column="1" Grid.Row="1" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Номер" Binding="{Binding id}"/>
                 <DataGridTextColumn Header="Вместимость" Binding="{Binding rooms_quantity}"/>
@@ -39,8 +38,8 @@
                 <DataGridTextColumn Header="По дату" Binding="{Binding order_date_end}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <StackPanel x:Name="stackButtons" Grid.Row="1" Background="#FFE8EADE">
-            <Button x:Name="btnAdd" Click="btnAdd_Click" Background="#FFEDE4B4">Добавить заявку</Button>
+        <StackPanel x:Name="stackButtons" Grid.Row="1">
+            <Button x:Name="btnAdd" Click="btnAdd_Click">Добавить заявку</Button>
             <!--<Button x:Name="btnDelete" Click="btnDelete_Click">Удалить заявку</Button>
             <Button x:Name="btnEdit" Click="btnEdit_Click">Редактировать заявку</Button>-->
             <Label Content="Отчет о заявках за период" Grid.Row="1" Margin="0 20 0 0" FontWeight="Bold"/>
@@ -48,8 +47,8 @@
             <DatePicker x:Name="datePickerIn" VerticalAlignment="Center" Margin="5 0"  Grid.Row="3" Grid.Column="1"/>
             <Label Content="Дата выселения" Grid.Row="4" Margin="20 0 0 0"/>
             <DatePicker x:Name="datePickerOut" VerticalAlignment="Center" Margin="5 0"  Grid.Row="4" Grid.Column="1"/>
-            <Button x:Name="btnShowPeriod" Click="btnShowPeriod_Click"  Background="#FFEDE4B4" >Показать</Button>
-            <Button x:Name="btnHome" Click="btnHome_Click" Background="#FFEDE4B4">На главную</Button>
+            <Button x:Name="btnShowPeriod" Click="btnShowPeriod_Click" >Показать</Button>
+            <Button x:Name="btnHome" Click="btnHome_Click" >На главную</Button>
         </StackPanel>
         
     </Grid>
