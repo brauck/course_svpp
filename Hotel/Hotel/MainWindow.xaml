@@ -44,9 +44,9 @@
             <!--<Button x:Name="btnDelete" Click="btnDelete_Click">Удалить заявку</Button>
             <Button x:Name="btnEdit" Click="btnEdit_Click">Редактировать заявку</Button>-->
             <Label Content="Отчет о заявках за период" Grid.Row="1" Margin="0 20 0 0" FontWeight="Bold"/>
-            <Label Content="Дата заселения" Grid.Row="3" Margin="20 0 0 0"/>
+            <Label Content="Начало периода" Grid.Row="3" Margin="20 0 0 0"/>
             <DatePicker x:Name="datePickerIn" VerticalAlignment="Center" Margin="5 0"  Grid.Row="3" Grid.Column="1"/>
-            <Label Content="Дата выселения" Grid.Row="4" Margin="20 0 0 0"/>
+            <Label Content="Конец периода" Grid.Row="4" Margin="20 0 0 0"/>
             <DatePicker x:Name="datePickerOut" VerticalAlignment="Center" Margin="5 0"  Grid.Row="4" Grid.Column="1"/>
             <Button x:Name="btnShowPeriod" Click="btnShowPeriod_Click"  Background="#FFEDE4B4" >Показать</Button>
             <Button x:Name="btnHome" Click="btnHome_Click" Background="#FFEDE4B4">На главную</Button>
