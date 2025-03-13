@@ -298,9 +298,9 @@ namespace Hotel
             string sql = $"select room_id from order_clients_rooms" +
                 $" join room on room.id = room_id" +
                 $" where rooms_quantity = '{quantity}'" +
-                $" and order_date_end > '{dateOut}'" +
-                $" and order_date_at < '{dateIn}'" +
-                $" limit 1";
+                //$" and order_date_end > '{dateOut}'" +
+                //$" and order_date_at < '{dateIn}'" +
+                $" order by rand() limit 1";
 
             conn.Open();
             MySqlCommand cmd = new MySqlCommand(sql, conn);
